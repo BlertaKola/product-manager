@@ -1,25 +1,33 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-const ProductForm = () => {
+import { useNavigate } from "react-router-dom";
+const ProductForm = (props) => {
+    const {products, setProducts} = props
     const [title, setTitle] = useState(""); 
-    const [price, setPrice] = useState();
+    const [price, setPrice] = useState("");
     const [description, setDescription] = useState("")
+    const navigate = useNavigate()
     const onSubmitHandler = (e) => {
         e.preventDefault();
+        // const newProduct = {title, price, description}
+        // console.log(newProduct)
         axios.post('http://localhost:8000/api/products', {
-            title,   
+            title,
             price,
-            description    
+            description   
         })
             .then(res=>{
-                console.log(res);
+                setProducts([...products, res])
                 console.log(res.data);
             })
             
             .catch(err=>console.log(err))
+        
+        // console.log(products)
         setTitle("")
-        setPrice()
+        setPrice("")
         setDescription("")
+        navigate('/products')
     }
 
     
