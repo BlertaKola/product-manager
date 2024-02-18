@@ -5,6 +5,11 @@ import { Link } from "react-router-dom"
 
 const ProductList = (props) => {
     const { products, setProducts } = props
+    const deleteProduct = (prodId) => {
+        axios.delete(`http://localhost:8000/api/products/${prodId}`)
+        .then(console.log("deleted"))
+        .catch(err => console.log(err))
+    }
     useEffect(() => {
         axios.get("http://localhost:8000/api/products")
             .then((res) => {
@@ -36,6 +41,8 @@ const ProductList = (props) => {
                                 <td>{prod.price}</td>
                                 <td>{prod.description}</td>
                                 <td><Link to={`/products/${prod._id}`}> {prod.title}'s Page! </Link></td>
+                                <td><Link to={`/products/edit/${prod._id}`}> Update {prod.title}</Link></td>
+                                <td><button onClick={(e) => deleteProduct(prod._id)}>Delete</button></td>
                             </tr>
 
                         )
