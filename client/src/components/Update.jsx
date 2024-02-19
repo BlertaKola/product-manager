@@ -6,12 +6,12 @@ import DeleteButton from "./DeleteButton";
 
 const Update = (props) => {
     const { id } = useParams();
-    const [product, setProduct] = useState();
+    const [product, setProduct] = useState({});
     const [loaded, setLoaded] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         axios.get('http://localhost:8000/api/products/' + id)
-            .then(res => {setProduct(res.data); setLoaded(true);})
+            .then(res => { setProduct(res.data); setLoaded(true);})
            .catch((err)=>console.log(err))
     }, [])
     const updateProduct = productObject => {

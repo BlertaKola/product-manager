@@ -8,6 +8,7 @@ import axios from "axios";
 
 
 const Main = () => {
+    const [updated,setupdated]= useState(false)
     const [products, setProducts] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:8000/api/products')
@@ -15,7 +16,7 @@ const Main = () => {
                 setProducts(res.data)
             })
             .catch((err)=>console.log(err))
-    }, [])
+    }, [updated])
     const removeFromDom = prodId => {
         axios.delete("http://localhost:8000/api/products/" + prodId)
         .then((res)=>{
@@ -29,8 +30,7 @@ const Main = () => {
         axios.post('http://localhost:8000/api/products', prodObject)
             .then(res => {
                 console.log(res);
-                console.log(res.data)
-                setProducts([...products, prodObject])
+                setupdated(!updated)
             })
             .catch((err)=>console.log(err))
     }
@@ -41,16 +41,5 @@ const Main = () => {
             <ProductList products={products} removeFromDom={removeFromDom} />
         </div>
     )
-    // const [products, setProducts] = useState([])
-
-    // return (
-    //     <>
-
-    //         <ProductForm products={products} setProducts={setProducts}></ProductForm>
-    //         <ProductList products={products} setProducts={setProducts} style={{marginTop: "30px"}}></ProductList>
-
-
-    //     </>
-    // )
 }
 export default Main

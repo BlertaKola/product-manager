@@ -5,9 +5,7 @@ module.exports.index = (request, response) => {
     });
 }
 module.exports.createProduct = (request, response) => {
-
     Product.create(request.body) 
-        .then(person => console.log(person))
         .then(person => response.json(person))
         .catch(err => response.json(err));
 }
